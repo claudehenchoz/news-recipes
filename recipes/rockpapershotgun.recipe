@@ -6,13 +6,6 @@ from calibre.web.feeds.news import BasicNewsRecipe
 from collections import defaultdict
 
 
-def classes(classes):
-    q = frozenset(classes.split(' '))
-    return dict(
-        attrs={'class': lambda x: x and frozenset(x.split()).intersection(q)}
-    )
-
-
 class RockPaperShotgun(BasicNewsRecipe):
     title = 'Rock Paper Shotgun'
     oldest_article = 7
@@ -29,7 +22,11 @@ class RockPaperShotgun(BasicNewsRecipe):
     
     def parse_index(self):
 
-        index_urls = ('https://www.rockpapershotgun.com/latest','https://www.rockpapershotgun.com/latest?page=2','https://www.rockpapershotgun.com/latest?page=3')
+        index_urls = ('https://www.rockpapershotgun.com/latest',
+                      'https://www.rockpapershotgun.com/latest?page=2',
+                      'https://www.rockpapershotgun.com/latest?page=3',
+                      'https://www.rockpapershotgun.com/latest?page=4',
+                      'https://www.rockpapershotgun.com/latest?page=5')
 
         feeds = defaultdict(list)
 
@@ -38,9 +35,6 @@ class RockPaperShotgun(BasicNewsRecipe):
 
             for articlesoup in soup.find_all('article', class_="summary"):
                 
-                #inspect(article.contents)
-                articles = []
-
                 section = articlesoup.attrs['data-article-type'].strip().capitalize()
                 title = articlesoup.find('a')['title']
                 url = articlesoup.find('a')['href']
@@ -49,7 +43,7 @@ class RockPaperShotgun(BasicNewsRecipe):
                 feeds[section].append({'title': title, 'url': url, 'description': description})
         
         ans = []
-        for sec in sorted(feeds, key=lambda x: (x != 'Cover Story', x)):
+        for sec in ('News','Features','Reviews','Deals'):
             articles = feeds[sec]
             if articles:
                 ans.append((sec, articles))
