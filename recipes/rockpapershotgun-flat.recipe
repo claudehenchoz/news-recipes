@@ -1,0 +1,20 @@
+#!/usr/bin/env python2
+# vim:fileencoding=utf-8
+from __future__ import unicode_literals, division, absolute_import, print_function
+from calibre.web.feeds.news import BasicNewsRecipe
+
+
+class RockPaperShotgun(BasicNewsRecipe):
+    title = 'Rock Paper Shotgun'
+    oldest_article = 7
+    max_articles_per_feed = 3
+    auto_cleanup = False
+    no_stylesheets = True
+    keep_only_tags = [
+        dict(name='h1', attrs={'class':'title'}),
+        dict(name='span', attrs={'class':'strapline'}),
+        dict(name='div', attrs={'class':'headline_asset'}),
+        dict(name='div', attrs={'class':'article_body'}),
+    ]
+    remove_tags = []
+    feeds = ['http://feeds.feedburner.com/RockPaperShotgun']
