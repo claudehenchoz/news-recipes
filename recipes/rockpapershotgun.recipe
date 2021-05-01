@@ -21,7 +21,6 @@ class RockPaperShotgun(BasicNewsRecipe):
     remove_tags = []
     
     def parse_index(self):
-
         index_urls = ('https://www.rockpapershotgun.com/latest',
                       'https://www.rockpapershotgun.com/latest?page=2',
                       'https://www.rockpapershotgun.com/latest?page=3',
@@ -32,14 +31,11 @@ class RockPaperShotgun(BasicNewsRecipe):
 
         for index_url in index_urls:
             soup = self.index_to_soup(index_url)
-
             for articlesoup in soup.find_all('article', class_="summary"):
-                
                 section = articlesoup.attrs['data-article-type'].strip().capitalize()
                 title = articlesoup.find('a')['title']
                 url = articlesoup.find('a')['href']
                 description = articlesoup.find('div', class_="excerpt").text.strip()
-
                 feeds[section].append({'title': title, 'url': url, 'description': description})
         
         ans = []
