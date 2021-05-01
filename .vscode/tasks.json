@@ -6,7 +6,7 @@
         {
             "label": "EbookConvert",
             "type": "shell",
-            "command": "ebook-convert ${file} ${fileWorkspaceFolder}${pathSeparator}test.mobi --output-profile kindle --test",
+            "command": "ebook-convert ${file} ${fileWorkspaceFolder}${pathSeparator}test.mobi --output-profile kindle",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
